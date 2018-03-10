@@ -1,0 +1,6 @@
+<div>
+    <p-progressBar [value] = "timer.current | bar:timer.initial" [unit] = "s"></p-progressBar>
+    <br>
+    <p>Do <strong>NOT</strong> press the button</p>
+    <button (click) = "increase(timer.current)">The Button</button>
+</div>
