@@ -1,5 +1,8 @@
 import {NgModule} from '@angular/core';
+import {CommonModule} from "@angular/common";
 import {RouterModule, Routes} from '@angular/router';
+
+import {ButtonModule} from 'primeng/button';
 
 import {LoadingComponent} from './loading.component';
 
@@ -13,7 +16,7 @@ const loading: Routes = [
 
 @NgModule({
     declarations: [LoadingComponent],
-    imports: [RouterModule.forChild(loading), TimerModule],
+    imports: [RouterModule.forRoot(loading), CommonModule, ButtonModule, TimerModule],
     exports: [LoadingComponent],
     providers: []
 })

@@ -1,3 +1,12 @@
-<div>
-    <timer></timer>
+<div style = "font-family: Roboto">
+    <div *ngIf = "timer.current >= 0; then load; else complete"></div>
+    
+    <ng-template #load>
+        <timer></timer>
+    </ng-template>
+    
+    <ng-template #complete>
+        <h2>Please click the other button</h2>
+        <button pButton type = "button" label = "Other Button" (click) = onClick()></button>
+    </ng-template>
 </div>

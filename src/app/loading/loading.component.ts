@@ -1,9 +1,8 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnDestroy} from '@angular/core';
 import {Router, Event, NavigationEnd} from "@angular/router/";
 
 import {Subscription} from "rxjs/Subscription";
 
-import {TimerComponent} from "../timer/timer.component";
 import {TimerService} from "../timer/timer.service";
 
 
@@ -11,37 +10,36 @@ import {TimerService} from "../timer/timer.service";
     selector: 'loading',
     templateUrl: 'loading.component.html'
 })
-export class LoadingComponent implements OnInit {
+export class LoadingComponent implements OnDestroy {
     
     private router : Router;
-    private timer : TimerService;
     private subscription : Subscription;
+    timer : TimerService;
     
     
-    constrcutor(router : Router, timer : TimerService) {
+    constructor(router : Router, timer : TimerService) {
         this.router = router;
         this.timer = timer;
-    }
-    
-    
-    ngOnInit() {
-        console.log(this.router == undefined);
-        console.log(this.timer == undefined);
         this.router.events.subscribe((event : Event) => {
             if (event instanceof NavigationEnd) {
-                this.subscription = this.timer.start().subscribe(current => {
-                    if (current <= 0) {
-                        this.subscription.unsubscribe();
-                    }
-                });
+                if (this.subscription != undefined && this.subscription != null) {
+                    this.subscription.unsubscribe();
+                }
+                this.subscription = this.timer.start().subscribe();
             }
         });
     }
     
+    
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        if (this.subscription != undefined) {
+            this.subscription.unsubscribe();
+        }
+    }
+    
+    
+    onClick() : void {
+        this.router.navigate(["/food"]);
     }
     
 }
-
-

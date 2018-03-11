@@ -18,7 +18,7 @@ export class TimerService {
         if (this.observable == undefined) {
             this.initial = initial;
             this.current = initial;
-            this.observable = Observable.timer(1000, 1000).share().map(tick => {
+            this.observable = Observable.timer(1000, 1000).map(tick => {
                 if (this.current >= 0) {
                     this.current--;
                     return this.current;
@@ -26,7 +26,7 @@ export class TimerService {
                 } else {
                     return 0;
                 }
-            });
+            }).share();
         }
         
         return this.observable;

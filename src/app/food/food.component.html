@@ -1,0 +1,7 @@
+<div style = "font-family: Roboto">
+    <h2>Menu</h2>
+    
+    <div *ngFor = "let item of items">
+        <input type = "image" [src] = "item.source" [alt] = "item.name" width = "10%" height = "10%" (click) = order(item.index)/>
+    </div>
+</div>

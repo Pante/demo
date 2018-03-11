@@ -1,36 +1,30 @@
-import {Component, OnInit, OnDestroy} from "@angular/core";
+import {Component, OnDestroy} from "@angular/core";
 import {Router, Event, NavigationEnd} from "@angular/router/";
 
 import {Subscription} from "rxjs/Subscription";
 
-import {ProgressBarModule} from 'primeng/progressbar';
-
 import {TimerService} from "./timer.service";
-import {BarPipe} from "./timer.pipes";
 
 
 @Component({
     selector : "timer",
     templateUrl : "./timer.component.html"
 })
-export class TimerComponent implements OnInit, OnDestroy {
+export class TimerComponent implements OnDestroy {
     
     private router : Router;
-    timer : TimerService;
     private subscription : Subscription;
+    timer : TimerService;
     
     
-    constrcutor(router : Router, timer : TimerService) {
-        console.log("Timer constructor");
+    constructor(router : Router, timer : TimerService) {
         this.router = router;
         this.timer = timer;
-    }
-    
-    
-    ngOnInit() {
-        console.log("Timer init");
         this.router.events.subscribe((event : Event) => {
             if (event instanceof NavigationEnd) {
+                if (this.subscription != undefined && this.subscription != null) {
+                    this.subscription.unsubscribe();
+                }
                 this.subscription = this.timer.start().subscribe(current => {
                     if (current <= 0) {
                         this.subscription.unsubscribe();
@@ -40,8 +34,11 @@ export class TimerComponent implements OnInit, OnDestroy {
         });
     }
     
+    
     ngOnDestroy() {
-        this.subscription.unsubscribe();
+        if (this.subscription != undefined) {
+            this.subscription.unsubscribe();
+        }
     }
     
     

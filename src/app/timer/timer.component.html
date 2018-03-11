@@ -1,6 +1,7 @@
-<div>
-    <p-progressBar [value] = "timer.current | bar:timer.initial" [unit] = "s"></p-progressBar>
+<div style = "font-family: Roboto">
+    <h2>Please wait {{timer.current | seconds}}</h2>
+    <p-progressBar [value] = "timer.current | bar:timer.initial"></p-progressBar>
     <br>
     <p>Do <strong>NOT</strong> press the button</p>
-    <button (click) = "increase(timer.current)">The Button</button>
+    <button pButton type = "button" label = "The Button" [disabled] = "timer.current == 0" (click) = "increase(timer.current)"></button>
 </div>
